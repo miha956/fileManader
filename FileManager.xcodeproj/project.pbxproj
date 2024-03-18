@@ -10,9 +10,9 @@
 		A9E305362BA8338D0087173E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E305352BA8338D0087173E /* AppDelegate.swift */; };
 		A9E305382BA8338D0087173E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E305372BA8338D0087173E /* SceneDelegate.swift */; };
 		A9E3053A2BA8338D0087173E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E305392BA8338D0087173E /* ViewController.swift */; };
-		A9E3053D2BA8338D0087173E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9E3053B2BA8338D0087173E /* Main.storyboard */; };
 		A9E3053F2BA8338E0087173E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9E3053E2BA8338E0087173E /* Assets.xcassets */; };
 		A9E305422BA8338E0087173E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9E305402BA8338E0087173E /* LaunchScreen.storyboard */; };
+		A9E3054B2BA835670087173E /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E3054A2BA835670087173E /* FileManagerService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +20,10 @@
 		A9E305352BA8338D0087173E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9E305372BA8338D0087173E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A9E305392BA8338D0087173E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A9E3053C2BA8338D0087173E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A9E3053E2BA8338E0087173E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9E305412BA8338E0087173E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A9E305432BA8338E0087173E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9E3054A2BA835670087173E /* FileManagerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,12 +59,20 @@
 				A9E305352BA8338D0087173E /* AppDelegate.swift */,
 				A9E305372BA8338D0087173E /* SceneDelegate.swift */,
 				A9E305392BA8338D0087173E /* ViewController.swift */,
-				A9E3053B2BA8338D0087173E /* Main.storyboard */,
+				A9E305492BA835230087173E /* FileManagerService */,
 				A9E3053E2BA8338E0087173E /* Assets.xcassets */,
 				A9E305402BA8338E0087173E /* LaunchScreen.storyboard */,
 				A9E305432BA8338E0087173E /* Info.plist */,
 			);
 			path = FileManager;
+			sourceTree = "<group>";
+		};
+		A9E305492BA835230087173E /* FileManagerService */ = {
+			isa = PBXGroup;
+			children = (
+				A9E3054A2BA835670087173E /* FileManagerService.swift */,
+			);
+			path = FileManagerService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +135,6 @@
 			files = (
 				A9E305422BA8338E0087173E /* LaunchScreen.storyboard in Resources */,
 				A9E3053F2BA8338E0087173E /* Assets.xcassets in Resources */,
-				A9E3053D2BA8338D0087173E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,20 +148,13 @@
 				A9E3053A2BA8338D0087173E /* ViewController.swift in Sources */,
 				A9E305362BA8338D0087173E /* AppDelegate.swift in Sources */,
 				A9E305382BA8338D0087173E /* SceneDelegate.swift in Sources */,
+				A9E3054B2BA835670087173E /* FileManagerService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		A9E3053B2BA8338D0087173E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A9E3053C2BA8338D0087173E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		A9E305402BA8338E0087173E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -297,9 +297,8 @@
 				INFOPLIST_FILE = FileManager/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -325,9 +324,8 @@
 				INFOPLIST_FILE = FileManager/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
