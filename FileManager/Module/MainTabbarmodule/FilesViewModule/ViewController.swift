@@ -12,7 +12,10 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     // MARK: Properties
     
     let fileManagerService: FileManagerServiceProtocol
-    
+    let userDefaultsManager: UserDefaultsManagerPtotocol
+    var settings: Settings? {
+        userDefaultsManager.loadSettings()
+    }
     // MARK: Subviews
     
     private let tableView: UITableView = {
@@ -25,15 +28,17 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
             barButtonSystemItem: .add,
             target: self,
             action: #selector(addFileButtonTapped))
-        view.tintColor = .systemBlue
+        view.tintColor = .black
         return view
     }()
     private lazy var addFolderButton: UIBarButtonItem = {
         let view = UIBarButtonItem(image: UIImage(systemName: "folder.badge.plus"),
                                    style: .plain, target: self,
                                    action: #selector(addFolderButtonTapped))
+        view.tintColor = .black
         return view
     }()
+    
 
     // MARK: lifeCycle
     
@@ -42,13 +47,18 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         setupView()
     }
     
-    init(fileManagerService: FileManagerServiceProtocol) {
+    init(fileManagerService: FileManagerServiceProtocol, userDefaults: UserDefaultsManagerPtotocol) {
         self.fileManagerService = fileManagerService
+        self.userDefaultsManager = userDefaults
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
     
     deinit {
@@ -106,18 +116,31 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var items = fileManagerService.items
+        if settings!.sortBy {
+            items.sort {$0.name < $1.name}
+        } else {
+            items.sort {$0.name > $1.name}
+        }
+    
         let cell = UITableViewCell()
         var configuration = UIListContentConfiguration.cell()
-        configuration.text = fileManagerService.items[indexPath.row].name
-        if fileManagerService.items[indexPath.row].isFolder! {
+        configuration.text = items[indexPath.row].name
+        if items[indexPath.row].isFolder! {
             cell.accessoryType = .disclosureIndicator
+        } else {
+            if settings!.showPhotoSize {
+                configuration.secondaryText = "\(fileManagerService.items[indexPath.row].url.dataRepresentation)"
+            }
         }
         cell.contentConfiguration = configuration
         return cell
     }
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         true
     }
+    
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return UITableViewCell.EditingStyle.delete
     }
@@ -133,7 +156,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         if fileManagerService.items[indexPath.row].isFolder! {
             let url = fileManagerService.items[indexPath.row].url
             let filemanager = FileManagerService(folderUrl: url)
-            let vc = ViewController(fileManagerService: filemanager)
+            let userdefaults = UserDefaultsManager()
+            let vc = ViewController(fileManagerService: filemanager, userDefaults: userdefaults)
             vc.title = fileManagerService.items[indexPath.row].name
             navigationController?.pushViewController(vc, animated: true)
         }

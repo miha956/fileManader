@@ -18,22 +18,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let fileManagerService = FileManagerService()
-        let vc = ViewController(fileManagerService: fileManagerService)
-        vc.title = "Documents"
-        let navigationController = UINavigationController(rootViewController: vc)
-        
-        let navBarAppearance = UINavigationBarAppearance()
-        
-        navBarAppearance.backgroundColor = .white
-        navigationController.navigationBar.scrollEdgeAppearance = navBarAppearance
-        navigationController.navigationBar.standardAppearance = navBarAppearance
-        navigationController.navigationBar.compactAppearance = navBarAppearance
-        navigationController.navigationBar.compactScrollEdgeAppearance = navBarAppearance
-        navigationController.navigationBar.prefersLargeTitles = true
+        let view = PasscodeView()
+        let keychainManager = KeychainManager()
+        let passcodeState: PasscodeState
+        if keychainManager.getPassword() != nil {
+                passcodeState = .inputPasscode
+        } else {
+            passcodeState = .setNewPasscode
+        }
+        let presenter = PasscodePresenter(view: view, passcodeState: passcodeState, keychainManager: keychainManager)
+        view.passcodePresenter = presenter
         
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = navigationController
+        window?.rootViewController = UIVideoEditorController(rootViewController: view)
         window?.makeKeyAndVisible()
         
     }
